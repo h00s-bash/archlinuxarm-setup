@@ -83,3 +83,9 @@ if [[ $input == "Y" || $input == "y" ]]; then
     systemctl restart systemd-networkd
   fi
 fi
+
+echo -n "Do you want to install desktop environment (LXDE)? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  pacman -S xorg xorg-xinit xorg-server xorg-server-utils xterm lxde lxde-common ttf-dejavu xf86-video-fbdev
+fi
