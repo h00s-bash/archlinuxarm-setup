@@ -43,6 +43,15 @@ if [[ $input == "Y" || $input == "y" ]]; then
   sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 fi
 
+echo -n "Do you want to set timezone? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  echo -n "Enter timezone: "
+  read timezone
+  timedatectl set-timezone $timezone
+  timedatectl status
+fi
+
 echo -n "Do you want to set ethernet network? [Y,n]? "
 read input
 if [[ $input == "Y" || $input == "y" ]]; then
