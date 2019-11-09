@@ -9,3 +9,12 @@ if [[ $input == "Y" || $input == "y" ]]; then
   groupmod -n $new_username alarm
   echo "New username set."
 fi
+
+echo -n "Do you want to set hostname? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  echo -n "Enter new hostname: "
+  read new_hostname
+  echo $new_hostname > /etc/hostname
+  echo "New hostname set."
+fi
