@@ -35,3 +35,10 @@ if [[ $input == "Y" || $input == "y" ]]; then
   pacman -Syyuw
   pacman -Syu
 fi
+
+echo -n "Do you want to enable sudo for wheel group? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  pacman -S sudo
+  sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
+fi
