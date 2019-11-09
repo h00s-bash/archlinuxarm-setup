@@ -42,3 +42,35 @@ if [[ $input == "Y" || $input == "y" ]]; then
   pacman -S sudo
   sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 fi
+
+echo -n "Do you want to set ethernet network? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  echo "[Match]" > /etc/systemd/network/eth0.network
+  echo "Name=eth0" >> /etc/systemd/network/eth0.network
+  echo "" >> /etc/systemd/network/eth0.network
+  echo "[Network]" >> /etc/systemd/network/eth0.network
+  echo "DNSSEC=no" >> /etc/systemd/network/eth0.network
+  echo -n "Do you want to enable DHCP? [Y,n]? "
+  read input
+  if [[ $input == "Y" || $input == "y" ]]; then
+    echo "DHCP=yes" >> /etc/systemd/network/eth0.network
+    systemctl enable dhcpcd
+  else
+    echo -n "Enter IP address (192.168.1.2/24): "
+    read ipaddress
+    echo -n "Enter gateway (192.168.1.1): "
+    read gateway
+    echo -n "Enter DNS (192.168.1.1): "
+    read dns
+    echo "Address=$ipaddress" >> /etc/systemd/network/eth0.network
+    echo "Gateway=$gateway" >> /etc/systemd/network/eth0.network
+    echo "DNS=$dns" >> /etc/systemd/network/eth0.network
+    systemctl disable dhcpcd
+  fi
+  echo -n "WARNING: Do you want to restart network? [Y,n]? "
+  read input
+  if [[ $input == "Y" || $input == "y" ]]; then
+    systemctl restart systemd-networkd
+  fi
+fi
