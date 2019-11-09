@@ -84,6 +84,12 @@ if [[ $input == "Y" || $input == "y" ]]; then
   fi
 fi
 
+echo -n "Do you want to install common utilities? [Y,n]? "
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+  pacman -S tmux rsync vim git
+fi
+
 echo -n "Do you want to install desktop environment (LXDE)? [Y,n]? "
 read input
 if [[ $input == "Y" || $input == "y" ]]; then
